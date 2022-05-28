@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# R_HOME, R_ARCH and R_ARCH_BIN set by R CMD.
+
+if ! cmake -P src/check_cmake_version.cmake; then
+    echo "Please install cmake version 3.0 or above from your package manager, or from https://cmake.org/download/."
+    exit 1
+fi
+
+MAKE=`"${R_HOME}/bin/R" CMD config MAKE`
+
+if ! ${MAKE} -C src -f "${R_HOME}/etc${R_ARCH}/Makeconf" -f Makefile.win configure; then
+    exit 1
+fi
+

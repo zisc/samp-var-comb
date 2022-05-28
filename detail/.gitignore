@@ -1,0 +1,8 @@
+!.gitattributes
+
+*.aux
+*.bbl
+*.blg
+*.log
+*.RData
+

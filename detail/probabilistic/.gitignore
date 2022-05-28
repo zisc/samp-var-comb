@@ -1,0 +1,21 @@
+.*
+!.gitignore
+
+/build/
+
+# The cache stores packaged/archived (in *.tar.gz, *.zip, etc.) form for
+# download_external_dependencies.R. Some of these external dependencies
+# are quite large, and so are not checked into the git repository.
+/cache/
+
+/probabilistic/data/
+
+probabilistic.Rcheck/
+probabilistic*.tar.gz
+probabilistic*.tgz
+probabilistic*.zip
+probabilistic*.log
+
+*.csv
+*.pdf
+

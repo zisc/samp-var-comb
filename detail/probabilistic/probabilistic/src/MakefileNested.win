@@ -1,0 +1,32 @@
+R_INCLUDE_DIR?=$(shell Rscript --vanilla -e "cat(R.home('include'))")
+
+all:
+	cd build && $(MAKE)
+
+configure:
+	mkdir -p build && \
+	cd build && \
+	cmake \
+		-G "Unix Makefiles" \
+		-DCMAKE_C_COMPILER="$(word 1,$(CC)).exe" \
+		-DCMAKE_CXX_COMPILER="$(word 1,$(or $(CXX11),$(CXX1X))).exe" \
+		-DAR="$(AR)" \
+		-DBLAS_LIBS="$(BLAS_LIBS)" \
+		-DCFLAGS="$(CFLAGS)" \
+		-DCLINK_CPPFLAGS="$(CLINK_CPPFLAGS)" \
+		-DCXX11FLAGS="$(or $(CXX11FLAGS),$(CXX1XFLAGS))" \
+		-DR_INCLUDE_DIR="$(R_INCLUDE_DIR)" \
+		-DR_BIN_DIR="$(R_BIN_DIR)" \
+		-DLAPACK_LIBS="$(LAPACK_LIBS)" \
+		-DLDFLAGS="$(LDFLAGS)" \
+		-DLIBR="$(LIBR)" \
+		-DRANLIB="$(RANLIB)" \
+		-DSHLIB_CXX11LDFLAGS="$(or $(SHLIB_CXX11LDFLAGS),$(SHLIB_CXX1XLDFLAGS)) $(DLLFLAGS)" \
+		-DSHLIB_EXT="$(SHLIB_EXT)" \
+		-DSTRIP_LIBS="$(STRIP_LIBS)" \
+		-DSTRIP_SHARED_LIB="$(STRIP_SHARED_LIB)" \
+		..
+
+clean:
+	rm -rf build
+

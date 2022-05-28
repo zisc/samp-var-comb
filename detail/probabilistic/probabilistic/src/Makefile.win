@@ -1,0 +1,15 @@
+.SHELLFLAGS = -c
+
+all:
+	$(MAKE) -f "$(R_HOME)/etc$(R_ARCH)/Makeconf" -f MakefileNested.win configure all
+
+configure:
+	# Required for R CMD INSTALL, but doesn't work unless everything is in all.
+	# This is because the CLINK_CPPFLAGS environment variable is required for
+	# CMake to generate the makefiles, but this is only made available by
+	# R CMD INSTALL when it runs 'make all'.
+	# $(MAKE) -f MakefileNested configure	# Makeconf passed through by configure script.
+
+clean:
+	$(MAKE) -f "$(R_HOME)/etc$(R_ARCH)/Makeconf" -f MakefileNested.win clean
+

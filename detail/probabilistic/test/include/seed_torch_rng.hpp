@@ -1,0 +1,7 @@
+#ifndef PROBABILISTIC_SEED_TORCH_RNG_HPP_GUARD
+#define PROBABILISTIC_SEED_TORCH_RNG_HPP_GUARD
+
+void seed_torch_rng(void);
+
+#endif
+

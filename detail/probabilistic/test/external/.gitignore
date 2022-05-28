@@ -1,0 +1,10 @@
+# We ignore dependencies which are downloaded by
+# ../../download_external_dependencies.R
+# We use a white list, ignoring everying
+# and then unignoring what we need.
+
+*
+
+!.gitignore
+!boost.cmake
+!CMakeLists.txt

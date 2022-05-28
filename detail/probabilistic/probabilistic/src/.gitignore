@@ -1,0 +1,21 @@
+# Don't checkin the build directory, which is
+# used exclusively by cmake to build the
+# project.
+/build/
+
+# boost really should belong in src/external,
+# however it is in src to prevent some file
+# paths growing to over 100 characters, which
+# causes problems for some tar implementations.
+# Since boost is nevertheless an external
+# dependency downloaded via script, we should
+# ignore it for the purposes of version control.
+/boost/
+
+# libbost should also belong in src/external,
+# however the Torch project must be found via
+# find_project in the highest-level scope of
+# cmake, see
+# https://github.com/pytorch/pytorch/issues/21737
+/libtorch/
+/pytorch/

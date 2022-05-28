@@ -1,0 +1,6 @@
+# Ensure that variables from makefiles included later are
+# exported so that they propegate recursively to sub-make
+# invocations.
+
+export
+
