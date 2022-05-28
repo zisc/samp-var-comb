@@ -1,3 +1,5 @@
+COPY %cd%\SPXTR.csv %cd%\detail\SP500
+
 REM Load docker image. Note that this image only contains software dependencies, and does not contain results of any pre-run
 REM analyses that would appear in the paper. The debendencies consist of R, some R packages, latex, and some latex packages.
 REM See detail/Dockerfile for the specific packages used.
@@ -14,3 +16,4 @@ REM Copy the paper to a more obvious location, ouside of the detail/ subdirector
 COPY %cd%\detail\sampling_variability_forecast_combinations.pdf %cd%\paper.pdf
 
 PAUSE
+
