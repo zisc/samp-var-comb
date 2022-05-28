@@ -8,6 +8,8 @@ set -e
 NESTING_USER="$(logname)"
 NESTED_USER="$(whoami)"
 
+cp SPXTR.csv detail/SP500
+
 (
     cd detail
 
