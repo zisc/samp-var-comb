@@ -1,5 +1,10 @@
 COPY %cd%\SPXTR.csv %cd%\detail\SP500
 
+REM Download docker image if required.
+if not exist %cd%\detail\docker_image.tar.gz (
+    powershell -Command "(New-Object Net.WebClient).DownloadFile('https://melb.zischke.net.au/index.php/s/bfkvI8wZzCqBRdT/download', '%cd%\detail\docker_image.tar.gz')"
+)
+
 REM Load docker image. Note that this image only contains software dependencies, and does not contain results of any pre-run
 REM analyses that would appear in the paper. The debendencies consist of R, some R packages, latex, and some latex packages.
 REM See detail/Dockerfile for the specific packages used.
