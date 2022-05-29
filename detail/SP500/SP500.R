@@ -42,7 +42,16 @@ if (file.exists(save_file)) {
     format(t, format = "%b %-e, %Y")
   }
   
-  spxtr <- read_csv("SPXTR.csv", col_types = cols(col_date("%d/%m/%Y"), col_character(), col_double(), col_double()), skip = 2) %>%
+  spxtr <- read_csv("SPXTR.csv", col_types = cols(col_date("%d/%m/%Y"), col_character(), col_double(), col_double()), skip = 2)
+  
+  if (nrow(spxtr) == 0) {
+    stop(paste0(
+      "SPXTR.csv has no data, which occurs if it is the dummy file provided by the github repository, and has not been replaced with the actual data. ",
+      "Have you followed all instructions given at \"https://github.com/zisc/samp-var-comb\"?"
+    ))
+  }
+  
+  spxtr <- spxtr %>%
     filter(
       Date >= in_sample_begin,
       Date <= out_of_sample_end
