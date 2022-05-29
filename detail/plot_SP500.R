@@ -17,14 +17,6 @@ if (file.exists(save.file)) {
   source(file.path("SP500", "SP500.R"), chdir = TRUE)
   
   decimal_places <- 4
-  # tbl_round <- function(x) {
-  #   multiplier <- 10^decimal_places
-  #  round(multiplier*x)/multiplier
-  # }
-  # tbl_num <- function(x) {
-  #   if (tbl_round(x) == 0) { return("0") }
-  #   sub("\\.$", "", sub("0+$", "", sprintf(paste0("%.", decimal_places, "f"), x)))
-  # }
   tbl_round <- function(x) { x }
   tbl_num <- function(x) {
     sprintf(paste0("%#.", decimal_places, "g"), x)
@@ -97,7 +89,6 @@ if (file.exists(save.file)) {
     density_grid_stage <- ggplot(plot_frame, aes(Draw, colour = Estimator)) +
       geom_density(aes(y = ..scaled..), size = 0.7/.pt, trim = TRUE) +
       facet_rep_grid(
-      # facet_grid(
         rows = vars(Optimize),
         cols = vars(Measure),
         scales = "free_x",
@@ -107,16 +98,13 @@ if (file.exists(save.file)) {
       ggtitle(periods_rename[[period]]) +
       xlab("Out-of-Sample Score") +
       ylab("") +
-      # scale_linetype_manual(values = score_lines) +
       scale_colour_manual(values = score_colour[c("One-Stage", "Two-Stage")], breaks = score_breaks) +
       theme_elsivier() +
       theme(
         legend.title = element_blank(),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
-        strip.text.y = element_text(angle = 90, margin = margin(r = 0.75, unit = "mm"))#,
-        # panel.spacing.x = unit(4, "mm"),
-        # panel.spacing.y = unit(4, "mm")
+        strip.text.y = element_text(angle = 90, margin = margin(r = 0.75, unit = "mm"))
       )
     dgs_panels <- ggplot_build(density_grid_stage)$layout$panel_params
     density_grid_stage <- density_grid_stage +
@@ -136,7 +124,6 @@ if (file.exists(save.file)) {
       height = full_height_width_inches_landscape,
       standAlone = TRUE
     )
-    # See page_dimensions.tex.
     grid.newpage()
     print(density_grid_stage)
     dev.off()
@@ -158,15 +145,12 @@ if (file.exists(save.file)) {
       ggtitle(periods_rename[[period]]) +
       xlab("Out-of-Sample Score") +
       ylab("") +
-      # scale_linetype_manual(values = score_lines) +
       scale_colour_manual(values = score_colour[c("LS", "$\\mathrm{CS}_{<10\\%}$", "$\\mathrm{CS}_{<20\\%}$")], breaks = score_breaks) +
       theme_elsivier() +
       theme(
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
-        strip.text.y = element_text(angle = 90, margin = margin(r = 0.75, unit = "mm"))#,
-        # panel.spacing.x = unit(4, "mm"),
-        # panel.spacing.y = unit(4, "mm")
+        strip.text.y = element_text(angle = 90, margin = margin(r = 0.75, unit = "mm"))
       )
     dgo_panels <- ggplot_build(density_grid_opt)$layout$panel_params
     density_grid_opt <- density_grid_opt +
@@ -186,7 +170,6 @@ if (file.exists(save.file)) {
       height = full_height_width_inches_landscape,
       standAlone = TRUE
     )
-    # See page_dimensions.tex
     grid.newpage()
     print(density_grid_opt)
     dev.off()
@@ -270,12 +253,8 @@ if (file.exists(save.file)) {
           page <- paste0(
             page,
             "\\multirow{", 4*length(score_names_plot), "}{*}{\\rotatebox[origin=c]{90}{In-Sample Score}} "
-            # "\\multirow{", 7*length(score_names_plot)-2, "}{*}{\\rotatebox[origin=c]{90}{In-Sample Score}} "#,
-            # "\\multirow{", 2*length(performance_measures)-1, "}{*}{\\rotatebox[origin=c]{90}{Evaluated Out-of-Sample}} "
           )
-        } # else {
-          # page <- paste0(page, "\\\\\n  ")
-        # }
+        }
         page <- paste0(page, "& ", train_score_latex_name)
         for (j in 1:length(estimators)) {
           estimator <- estimators[j]
@@ -288,19 +267,9 @@ if (file.exists(save.file)) {
           )
           if (i == length(score_names_plot) && j == length(estimators)) {
             page <- paste0(page, "  \\hline\n")
-          } # else {
-            # page <- paste0(page, "  \\\\\n")
-          # }
+          }
         }
       }
-      
-      # if (p != length(periods)) {
-      #   page <- paste0(
-      #     page,
-      #     "  \\\\\n",
-      #     "  \\\\\n"
-      #   )
-      # }
     }
     
     page <- paste0(page, "\\end{tabular}\n")
@@ -308,76 +277,8 @@ if (file.exists(save.file)) {
     return(page)
   }
   
-  plot_page <- function(period) {
-    page <- paste0(
-      "\\begin{sidewaysfigure}[!ht]\n",
-      "\\includegraphics[width=\\textwidth]{", file.path("figure", paste0(plot_file_name_stage[[period]], ".pdf")), "}\n",
-      "\\end{sidewaysfigure}\n",
-      "\\newpage\n",
-      "\\begin{sidewaysfigure}[!ht]\n",
-      "\\includegraphics[width=\\textwidth]{", file.path("figure", paste0(plot_file_name_opt[[period]], ".pdf")), "}\n",
-      "\\end{sidewaysfigure}\n"
-    )
-    return(page)
-  }
-  
-  # for (period in periods) {
-  #   cat(table_page(period), file = file.path("figure", paste0(tbl_file_name[[period]], ".tex")))
-  # }
-  # 
-  # latex_document <- paste0(
-  #   "\\documentclass[10pt]{article}\n",
-  #   "\\usepackage[margin=2cm, landscape]{geometry}\n",
-  #   "\\usepackage[T1]{fontenc}\n",
-  #   "\\usepackage{booktabs, multirow, array, graphicx}\n",
-  #   "\\begin{document}\n",
-  #   "\\title{S&P 500 Forecast Performance}\n",
-  #   "\n"
-  # )
-  # latex_document <- paste0(
-  #   latex_document,
-  #   "\\input{", file.path("figure", paste0(tbl_file_name[[ periods[1] ]], ".tex")), "}\n",
-  #   "\n\\newpage\n\n",
-  #   plot_page(periods[1])
-  # )
-  # for (i in 2:length(periods)) {
-  #   latex_document <- paste0(
-  #     latex_document,
-  #     "\n\\newpage\n\n",
-  #     "\\input{", file.path("figure", paste0(tbl_file_name[[ periods[i] ]], ".tex")), "}\n",
-  #     "\n\\newpage\n\n",
-  #     plot_page(periods[i])
-  #   )
-  # }
-  # latex_document <- paste0(latex_document, "\\end{document}\n")
-  
   cat(table_page(periods), file = file.path("figure", paste0("TBL", tbl_num_begin, ".tex")))
   
-  latex_document <- paste0(
-    "\\documentclass[10pt]{article}\n",
-    "\\usepackage[margin=2cm]{geometry}\n",
-    "\\usepackage[T1]{fontenc}\n",
-    "\\usepackage{booktabs, multirow, array, graphicx, rotating, color, colortbl}\n",
-    "\\definecolor{Gray}{gray}{0.9}\n",
-    "\\begin{document}\n",
-    "\\title{S&P 500 Forecast Performance}\n",
-    "\n",
-    "\\begin{table}[!h]\n",
-    "\\centering\n",
-    "\\input{", file.path("figure", paste0("TBL", tbl_num_begin, ".tex")), "}\n",
-    "\\end{table}\n"
-  )
-  for (period in periods) {
-    latex_document <- paste0(
-      latex_document,
-      "\n\\newpage\n\n",
-      plot_page(period)
-    )
-  }
-  latex_document <- paste0(latex_document, "\\end{document}\n")
-  
-  cat(latex_document, file = "plot_SP500.tex")
-  
-  save(latex_document, file = save.file)
-  
+  dummy <- TRUE
+  save(dummy, file = save.file)
 }
