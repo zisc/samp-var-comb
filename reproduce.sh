@@ -45,8 +45,8 @@ nonsudo_ownership detail/SP500/SPXTR.csv
         docker load --input docker_image.tar.gz
     else
         # If $DOCKERFILE_URL can be reached, download docker image from there, and load. Otherwise build from Dockerfile.
-        if wget --spider --quiet "${DOCKERFILE_URL}" ; then
-            wget "${DOCKERFILE_URL}" -O docker_image.tar.gz
+        if curl "${DOCKERFILE_URL}" --silent --head --fail --location --output /dev/null ; then
+            curl "${DOCKERFILE_URL}" --location --output docker_image.tar.gz
             nonsudo_ownership docker_image.tar.gz
             docker load --input docker_image.tar.gz
         else
