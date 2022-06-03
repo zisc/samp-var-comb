@@ -8,7 +8,7 @@ set -e
 NESTING_USER="$(logname)"
 NESTED_USER="$(whoami)"
 
-DOCKERFILE_URL="https://melb.zischke.net.au/index.php/s/bfkvI8wZzCqBRdT/download"
+DOCKERFILE_URL="https://dl.dropboxusercontent.com/s/x4d1er46f995xwb/docker_image.tar.gz"
 
 # This functions ensures that the files whose names are passed as arguments
 # is owned by $NESTING_USER.
