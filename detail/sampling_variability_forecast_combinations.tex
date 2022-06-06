@@ -1,3 +1,5 @@
+\pdfoutput=1
+
 \documentclass[12pt]{article}
 
 % NOTE: To produce blinded version, replace "0" with "1" below.
@@ -67,7 +69,7 @@
 {
   \renewcommand{\thefootnote}{\fnsymbol{footnote}}
   \title{\papertitle}
-  \date{June 5, 2022}
+  \date{June 6, 2022}
   \author{\paperauthors}
   \maketitle
   \footnotetext[1]{\funding}
@@ -96,7 +98,12 @@
 We investigate the performance and sampling variability of estimated forecast combinations, with particular attention given to the combination of forecast \textit{distributions}. Unknown parameters in the forecast combination are optimized according to criterion functions based on proper scoring rules, which are chosen to reward the form of forecast accuracy that matters for the problem at hand, and forecast performance is measured using the out-of-sample expectation of said scoring rule. Our results provide novel insights into the behavior of estimated forecast combinations. Firstly, we show that, {asymptotically}, the sampling variability in the performance of standard forecast combinations is determined {solely} by estimation of the constituent models, with estimation of the combination weights contributing no sampling variability whatsoever, at first order. Secondly, we show that, if computationally feasible, forecast combinations produced in a single step -- in which the constituent model and combination function parameters are estimated jointly -- have superior {predictive }accuracy and lower sampling variability than standard forecast combinations -- where constituent model and combination function parameters are estimated in two steps. These theoretical insights are demonstrated numerically, both in simulation settings and in an extensive empirical illustration using a time series of S\&P500 returns.
 \end{abstract}
 
-\noindent{\it Keywords:}  Forecast Combination, Forecast Combination Puzzle, Probabilistic Forecasting, Scoring Rules, S\&P500 Forecasting, Two-Stage Estimation
+\noindent{\it Keywords:}  Forecast Combination, Forecast Combination Puzzle, Probabilistic Forecasting, Scoring Rules, S\&P500 Forecasting, Two-Stage Estimation \if0\blind { \\ } \fi
+
+\if0\blind
+{
+  \noindent{\it JEL Classification:} C18, C51, C53 \\
+} \fi
 
 \spacingset{1.5}
 
