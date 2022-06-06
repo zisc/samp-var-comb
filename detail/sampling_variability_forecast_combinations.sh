@@ -29,3 +29,6 @@ pdflatex -interaction=nonstopmode "${PAPER}.tex"
 pdflatex -interaction=nonstopmode "${PAPER}.tex"
 pdflatex -interaction=nonstopmode "${PAPER}.tex"
 
+# Prepare submission for arXiv, see "https://arxiv.org/help/submit_tex".
+tar --create --gzip --file=arxiv_submission.tar.gz "${PAPER}.tex" *.bbl ECA_jasa.bst figure/FIG*.pdf figure/TBL*.tex
+
