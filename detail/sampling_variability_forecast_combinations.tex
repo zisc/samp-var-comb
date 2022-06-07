@@ -3,12 +3,12 @@
 \documentclass[12pt]{article}
 
 % NOTE: To produce blinded version, replace "0" with "1" below.
-\newcommand{\blind}{0}
+\newcommand{\blind}{1}
 
 \addtolength{\oddsidemargin}{-.5in}%
 \addtolength{\evensidemargin}{-1in}%
 \addtolength{\textwidth}{1in}%
-\addtolength{\textheight}{1.8in}%
+\addtolength{\textheight}{1.7in}%
 \addtolength{\topmargin}{-1in}%
 
 \usepackage{amsfonts}
@@ -58,54 +58,53 @@
 \def\spacingset#1{\renewcommand{\baselinestretch}%
 {#1}\small\normalsize} \spacingset{1}
 
-\newcommand{\papertitle}{\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts\protect\footnotemark[1]}
-\newcommand{\paperauthors}{Ryan Zischke\protect\footnotemark[2] \protect\footnotemark[3] \protect\footnotemark[4], Gael M. Martin\protect\footnotemark[2], David T. Frazier\protect\footnotemark[2], D. S. Poskitt\protect\footnotemark[2]}
+\newcommand{\papertitle}{\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
 \newcommand{\funding}{This research has been supported by Australian Research Council (ARC) Discovery Grant DP200101414. Frazier was also supported by ARC Early Career Researcher Award DE200101070; and Martin and Frazier were provided support by the ARC Centre of Excellence in Mathematics and Statistics.}
-\newcommand{\ebsaffiliation}{Department of Econometrics and Business Statistics, Monash University.}
-\newcommand{\mdaffiliation}{Methodology Division, Australian Bureau of Statistics. The views expressed in this paper are those of the authors alone, and do not in any way represent the Methodology Division, the Australian Bureau of Statistics, the Australian Public Service, or the Australian Government.}
+\newcommand{\ebsaffiliation}{Department of Econometrics and Business Statistics, Monash University}
+\newcommand{\mddisclaimer}{The views expressed in this paper are those of the authors alone, and do not in any way represent the Methodology Division, the Australian Bureau of Statistics, the Australian Public Service, or the Australian Government.}
+\newcommand{\mdaffiliation}{Methodology Division, Australian Bureau of Statistics\protect\footnotemark[2]}
 \newcommand{\correspondingauthor}{Corresponding author \\ \indent\ \ \textit{E-mail address:} ryan.zischke@monash.edu.}
+\newcommand{\paperauthors}{Ryan Zischke\protect\footnotemark[1]\hspace{.2cm} \\ \ebsaffiliation \\ \mdaffiliation \\ and \\  Gael M. Martin \\ \ebsaffiliation \\ and \\ David T. Frazier \\ \ebsaffiliation \\ and \\ D. S. Poskitt \\ \ebsaffiliation}
 
 \if0\blind
 {
   \renewcommand{\thefootnote}{\fnsymbol{footnote}}
   \title{\papertitle}
-  \date{June 6, 2022}
   \author{\paperauthors}
   \maketitle
   \footnotetext[1]{\funding}
-  \footnotetext[2]{\ebsaffiliation}
-  \footnotetext[3]{\mdaffiliation}
-  \footnotetext[4]{\correspondingauthor}
+  \footnotetext[2]{\mddisclaimer}
   \setcounter{footnote}{0}
   \renewcommand{\thefootnote}{\arabic{footnote}}
 } \fi
 
-
 \if1\blind
 {
-  \spacingset{1.5}
   \bigskip
   \bigskip
   \bigskip
   \begin{center}
-    {\Large\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
-  \end{center}
-  \smallskip
-  \spacingset{1}
+    {\LARGE\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
+\end{center}
+  \medskip
 } \fi
 
+\bigskip
 \begin{abstract}
 We investigate the performance and sampling variability of estimated forecast combinations, with particular attention given to the combination of forecast \textit{distributions}. Unknown parameters in the forecast combination are optimized according to criterion functions based on proper scoring rules, which are chosen to reward the form of forecast accuracy that matters for the problem at hand, and forecast performance is measured using the out-of-sample expectation of said scoring rule. Our results provide novel insights into the behavior of estimated forecast combinations. Firstly, we show that, {asymptotically}, the sampling variability in the performance of standard forecast combinations is determined {solely} by estimation of the constituent models, with estimation of the combination weights contributing no sampling variability whatsoever, at first order. Secondly, we show that, if computationally feasible, forecast combinations produced in a single step -- in which the constituent model and combination function parameters are estimated jointly -- have superior {predictive }accuracy and lower sampling variability than standard forecast combinations -- where constituent model and combination function parameters are estimated in two steps. These theoretical insights are demonstrated numerically, both in simulation settings and in an extensive empirical illustration using a time series of S\&P500 returns.
 \end{abstract}
 
-\noindent{\it Keywords:}  Forecast Combination, Forecast Combination Puzzle, Probabilistic Forecasting, Scoring Rules, S\&P500 Forecasting, Two-Stage Estimation \if0\blind { \\ } \fi
+\noindent{\it Keywords:}  Forecast Combination, Forecast Combination Puzzle, Probabilistic Forecasting, Scoring Rules, S\&P500 Forecasting, Two-Stage Estimation
 
 \if0\blind
 {
   \noindent{\it JEL Classification:} C18, C51, C53 \\
 } \fi
 
-\spacingset{1.5}
+\vfill
+
+\newpage
+\spacingset{1.8}
 
 \section{Introduction}
 
@@ -241,13 +240,9 @@ The following result compares, in our chosen measure of forecast performance, th
 
 \noindent(One-stage) $\mathcal{S}_0(\hat{\theta}_n) = \mathcal{O}_p(n^{-1})$. More specifically, for $X\sim N(0, W^0)$, \\ $n \lbrace \mathcal{S}_0(\hat{\theta}_{n}) - \mathcal{S}_0(\theta^0) \rbrace \Rightarrow - \frac{1}{2} X^{\prime} \left[ - \partial^2 \mathcal{S}_{0}(\theta^0) / \partial \theta \partial \theta^{\prime} \right] X.$
 
-%\noindent(One-stage) $\mathcal{S}_0(\hat{\theta}_n) = \mathcal{O}_p(n^{-1})$. More specifically, for $X\sim N(0, W^0)$, and $W^0$ as defined in \appendixname\ \ref{subsec:gmm}, $n \lbrace \mathcal{S}_0(\hat{\theta}_{n}) - \mathcal{S}_0(\theta^0) \rbrace \Rightarrow - \frac{1}{2} X^{\prime} \left[ - \partial^2 \mathcal{S}_{0}(\theta^0) / \partial \theta \partial \theta^{\prime} \right] X.$
-
 \smallskip
 
 \noindent(Two-stage) $\mathcal{S}_0(\tilde{\theta}_n) = \mathcal{O}_p(n^{-1/2}) $. More specifically, for $W^\star_{\gamma\gamma}$ denoting the $\gamma\gamma$-block of $W^\star$, \\ $\sqrt{n} \lbrace \mathcal{S}_0(\tilde{\theta}_{n}) - \mathcal{S}_{0}(\theta^{\star}) \rbrace \Rightarrow N(0, [\partial \mathcal{S}_{0}(\eta^{\star}, \gamma^{\star}) / \partial \gamma]^{\prime} W^{\star}_{\gamma \gamma} [\partial \mathcal{S}_0(\eta^{\star}, \gamma^{\star}) / \partial \gamma]).$
-
-%\noindent(Two-stage) $\mathcal{S}_0(\tilde{\theta}_n) = \mathcal{O}_p(n^{-1/2}) $. More specifically, for $W^\star$ as defined in \appendixname\ \ref{subsec:gmm}, and $W^\star_{\gamma\gamma}$ denoting the $\gamma\gamma$-block of $W^\star$, \\ $\sqrt{n} \lbrace \mathcal{S}_0(\tilde{\theta}_{n}) - \mathcal{S}_{0}(\theta^{\star}) \rbrace \Rightarrow N(0, [\partial \mathcal{S}_{0}(\eta^{\star}, \gamma^{\star}) / \partial \gamma]^{\prime} W^{\star}_{\gamma \gamma} [\partial \mathcal{S}_0(\eta^{\star}, \gamma^{\star}) / \partial \gamma]).$
 
 \end{theorem}
 
@@ -529,13 +524,13 @@ The authors report there are no competing interests to declare.
   \spacingset{1}
   \setcounter{footnote}{0}
   \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+  \title{\papertitle}
+  \author{\paperauthors}
   \maketitle
   \footnotetext[1]{\funding}
-  \footnotetext[2]{\ebsaffiliation}
-  \footnotetext[3]{\mdaffiliation}
-  \footnotetext[4]{\correspondingauthor}
+  \footnotetext[2]{\mddisclaimer}
   \renewcommand{\thefootnote}{\arabic{footnote}}
-  \spacingset{1.5}
+  \spacingset{1.8}
 } \fi
 
 \if1\blind
@@ -544,9 +539,9 @@ The authors report there are no competing interests to declare.
   \bigskip
   \bigskip
   \begin{center}
-    {\Large\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
-  \end{center}
-  \smallskip
+    {\LARGE\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
+\end{center}
+  \medskip
 } \fi
 
 \appendix
@@ -556,15 +551,10 @@ The authors report there are no competing interests to declare.
 
 The appendix contains technical details supporting the theory, simulations and empirical exercises developed in the main paper. \appendixname\ \ref{subsec:regularity} provides standard regularity conditions assumed in the theorems of Section \ref{sec:implications}. In \appendixname\ \ref{subsec:gmm}, we provide a GMM representation of two-stage forecast combinations and provide expressions for the asymptotic sampling distributions of the one- and two-stage parameter estimates. The structure of the asymptotic covariance matrix for the two-stage parameters are further explored in \appendixname\ \ref{subsec:gmmasycov}. The proofs for Theorems \ref{thm:one} and \ref{thm:two} can be found in \appendixname\ \ref{subsec:proofs}.
 
-\if0\blind
-{
 \newpage
-} \fi
 
 \setcounter{equation}{0}
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
-
-%\section{Theoretical Results\label{apx:theory}}
 
 \subsection{Regularity Conditions\label{subsec:regularity}}
 
