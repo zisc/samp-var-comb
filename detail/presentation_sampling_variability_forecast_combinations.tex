@@ -1,0 +1,195 @@
+\documentclass[aspectratio=169]{beamer}
+%\documentclass[handout,aspectratio=169]{beamer}
+
+\usepackage{
+	mathtools,
+	mathrsfs,
+	amsmath,
+	amsfonts,
+	amssymb,
+	amsthm,
+	graphicx
+}
+
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\setcitestyle{authoryear, open={(}, close={)}}
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+
+\usetheme{Madrid}
+
+\defbeamertemplate{subsubsection in toc}{subsubsections numbered}
+{\leavevmode\leftskip=3em%
+ \rlap{\hskip-3em\inserttocsectionnumber.\inserttocsubsectionnumber.\inserttocsubsubsectionnumber}%
+ \inserttocsubsubsection\par}
+
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+\setbeamertemplate{subsubsection in toc}[subsubsections numbered]
+
+\AtBeginSection[]
+{
+ \begin{frame}
+ \frametitle{Outline}
+ \tableofcontents[currentsection]
+ \end{frame}
+}
+
+\title[Variability and Forecast Combinations]{The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
+\author[Ryan Zischke]{Ryan Zischke, David T. Frazier, Gael M. Martin, D. S. Poskitt}
+\institute[Monash University]{Department of Econometrics and Business Statistics, Monash University}
+\date{July 13, 2022}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Outline}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Forecast Combinations}
+
+\def \negspacesmall {3mm}
+
+\begin{frame}
+\frametitle{Forecast Combinations}
+\begin{itemize}
+\item<1-> \textit{Forecast combinations} are weighted combinations of forecasts from distinct models \citep{Timmermann2006, Aastveit2019}.
+\vspace{\negspacesmall}
+\item<2-> Highly competitive \citep{Makridakis2020, Makridakis2020a, Makridakis2020b}.
+\vspace{\negspacesmall}
+\item<3-> A recipe:
+\vspace{\negspacesmall}
+\begin{enumerate}
+\item<4-> Obtain \textit{constituent models}, parameterised by $\gamma$.
+\vspace{\negspacesmall}
+\item<5-> Specify \textit{combination function} (e.g. \citealp{Stone1961, Bates1969}), parameterised by $\eta$.
+\vspace{\negspacesmall}
+\item<6-> Specify reward function $S$ \citep{Hyndman2006, Gneiting2007}.
+\vspace{\negspacesmall}
+\item<7-> Optimise $\theta = [\eta^{\prime}\ \gamma^{\prime}]^{\prime}$ according to $S$.
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\section{One- and Two-Stage Estimation}
+
+\subsection{Computation}
+
+\def \negspace {5mm}
+
+\begin{frame}
+\frametitle{One- and Two-Stage Estimation -- Computation}
+\begin{itemize}
+\item<1-> One-stage estimation:
+\vspace{\negspace}
+\begin{enumerate}
+\item<2-> $\hat{\theta}_n$ maximises average reward $S$ of combination.
+\end{enumerate}
+\vspace{\negspace}
+\item<3-> Two-stage estimation:
+\vspace{\negspace}
+\begin{enumerate}
+\item<4-> $\tilde{\gamma}_{j,n}$ maximises average reward $S$ of model $j$, $\tilde{\gamma}_n = [\tilde{\gamma}^{\prime}_{1,n}\ \cdots\ \tilde{\gamma}^{\prime}_{K,n}]^{\prime}$.
+\vspace{\negspace}
+\item<5-> $\tilde{\eta}_n$ maximises average reward $S$ of combination given $\gamma = \tilde{\gamma}_n$.
+\end{enumerate}
+\vspace{\negspace}
+\item<6-> $\hat{\theta}_n = [\hat{\eta}_n^{\prime}\ \hat{\gamma}_n^{\prime}]^{\prime}$, $\tilde{\theta}_n = [\tilde{\eta}_n^{\prime}\ \tilde{\gamma}_n^{\prime}]^{\prime}$.
+\end{itemize}
+\end{frame}
+
+\subsection{Forecast Performance Asymptotics}
+
+\begin{frame}
+\frametitle{One- and Two-Stage Estimation -- Forecast Performance Asymptotics}
+\begin{itemize}
+\item<2-> Measure forecast performance by $\mathcal{S}_0(\theta)$: expected out-of-sample reward $S$.
+\item<3-> Under regularity \citep{Newey1994}:
+\begin{gather*}
+\hat{\theta}_n \overset{p}{\to} \theta^0 = \argmax_{\theta} \mathcal{S}_0(\theta), \\
+\tilde{\theta}_n \overset{p}{\to} \theta^{\star} \neq \theta^0.
+\end{gather*}
+\item<4-> For $n$ large:
+\item<5->[] \begin{equation*}
+\mathcal{S}_0(\hat{\theta}_n) > \mathcal{S}_0(\tilde{\theta}_n),
+\end{equation*}
+\item<6->[] \begin{align*}
+\mathcal{S}_0(\hat{\theta}_n) - \mathcal{S}_0(\theta^0) &\approx \frac{1}{2} (\hat{\theta}_n - \theta^0)^{\prime} H (\hat{\theta}_n - \theta^0) = \mathcal{O}_p(n^{-1}), \\
+\mathcal{S}_0(\tilde{\theta}_n) - \mathcal{S}_0(\theta^{\star}) &\approx (\tilde{\gamma}_n - \gamma^{\star})^{\prime} G = \mathcal{O}_p(n^{-1/2}). 
+\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{One- and Two-Stage Estimation -- Forecast Performance Asymptotics}
+\begin{itemize}
+\item<1-> Let $X^0$ be the asymptotic normal distribution of $\sqrt{n}(\hat{\theta}_n - \theta^0)$.
+\vspace{\negspace}
+\item<2-> Let $X^{\star}$ be the asymptotic normal distribution of $\sqrt{n}(\tilde{\theta}_n - \theta^{\star})$.
+\vspace{\negspace}
+\item<3-> Then, for $X^{\star} \ne X^0$,
+\vspace{\negspace}
+\begin{align*}
+n \{ \mathcal{S}_0(\hat{\theta}_n) - \mathcal{S}_0(\theta^0) \} &\Rightarrow \frac{1}{2} X^{0 \prime} H X^0, \\[8mm]
+\sqrt{n} \{ \mathcal{S}_0(\tilde{\theta}_n) - \mathcal{S}_0(\theta^{\star}) \} &\Rightarrow X^{\star \prime} G.
+\end{align*}
+\end{itemize}
+\end{frame}
+
+\section{Monte Carlo Study}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[height=\textheight]{figure/FIG1p}
+\end{center}
+\end{frame}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[height=\textheight]{figure/FIG3p}
+\end{center}
+\end{frame}
+
+\section{Forecast Combination of S\&P500 Index}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[height=\textheight]{figure/FIG5}
+\end{center}
+\end{frame}
+
+\begin{frame}[plain]
+\begin{center}
+\includegraphics[height=\textheight]{figure/FIG7}
+\end{center}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+\item<1-> For $n$ large:
+\vspace{\negspace}
+\begin{enumerate}
+\item<2-> One-stage estimation has better out-of-sample forecast performance with lower variability than in two-stage estimation.
+\vspace{\negspace}
+\item<3-> All variability in the performance of two-stage combinations comes from estimating the constituent models.
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\section{References}
+\begin{frame}[allowframebreaks]
+\frametitle{References}
+\bibliography{library.bib}
+\end{frame}
+
+\end{document}

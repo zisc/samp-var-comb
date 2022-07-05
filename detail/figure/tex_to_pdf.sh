@@ -8,5 +8,8 @@ do
     fi
 done
 
+lualatex --interaction=nonstopmode --jobname="FIG1p" "FIG1p.tex"
+lualatex --interaction=nonstopmode --jobname="FIG3p" "FIG3p.tex"
+
 exit 0
 

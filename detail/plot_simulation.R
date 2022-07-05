@@ -80,7 +80,7 @@ if (file.exists(simulation_plots_file)) {
     add_column(labels_opt = plot_labels_stage$labels_stage)
   
   divergence_expectation_plot_stage <<- ggplot(
-    simulation_results_exp, #%>%
+    simulation_results_exp,
     aes(x = `Sample Size`, colour = Estimator)
   ) +
     geom_line(aes(y = `Average Divergence`), size = 0.6/.pt) +
@@ -124,6 +124,48 @@ if (file.exists(simulation_plots_file)) {
     standAlone = TRUE
   )
   print(divergence_expectation_plot_stage)
+  dev.off()
+  
+  divergence_expectation_plot_stage_presentation <<- ggplot(
+    simulation_results_exp,
+    aes(x = `Sample Size`)
+  ) +
+    geom_line(aes(y = `Average Divergence`, colour = Estimator), size = 0.6/.pt) +
+    geom_ribbon(aes(ymin = `Expected Divergence CI Low`, ymax = `Expected Divergence CI High`, fill = Estimator), alpha = 0.2) +
+    facet_rep_grid(
+      rows = vars(`Measure`),
+      cols = vars(`Optimize`),
+      scales = "free_y",
+      repeat.tick.labels = TRUE
+    ) +
+    scale_y_continuous(trans = "log10") +
+    ylab("Expected Divergence (Lower is Better)") +
+    scale_colour_manual(name = NULL, values = score_colour[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    scale_linetype_manual(name = NULL, values = score_lines["95\\% Confidence Interval"], breaks = score_breaks) +
+    scale_shape_manual(name = NULL, values = score_shapes[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    scale_fill_manual(name = NULL, values = score_colour[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    guides(shape = guide_legend(order = 1), colour = guide_legend(order = 2), linetype = guide_legend(order = 3), fill = "none") +
+    theme_elsivier()
+  deps_panels <- ggplot_build(divergence_expectation_plot_stage)$layout$panel_params
+  divergence_expectation_plot_stage <<- divergence_expectation_plot_stage +
+    geom_text_repel(
+      aes(x = x, y = y, label = labels_stage),
+      plot_labels_stage %>%
+        add_column(
+          x = sapply(deps_panels, function(p) { p$x.range[1] + letter_label_x_offset*(p$x.range[2] - p$x.range[1]) }),
+          y = sapply(deps_panels, function(p) { 10^(p$y.range[2] + letter_label_y_offset*(p$y.range[2] - p$y.range[1])) })
+        ),
+      size = theme_elsivier_axis_title_size/ .pt,
+      inherit.aes = FALSE
+    )
+  
+  tikz(
+    file = file.path("figure", "FIG1p.tex"),
+    width = page_width_inches,
+    height = full_width_height_inches,
+    standAlone = TRUE
+  )
+  print(divergence_expectation_plot_stage_presentation)
   dev.off()
   
   divergence_expectation_plot_opt <<- ggplot(
@@ -214,6 +256,49 @@ if (file.exists(simulation_plots_file)) {
     standAlone = TRUE
   )
   print(score_variance_plot_stage)
+  dev.off()
+  
+  score_variance_plot_stage_presentation <<- ggplot(
+    simulation_results_var,
+    aes(x = `Sample Size`)
+  ) +
+    geom_line(aes(y = `Sample Size`*Variance, colour = Estimator), size = 0.6/.pt) +
+    geom_ribbon(aes(ymin = `Sample Size`*`Variance CI Low`, ymax = `Sample Size`*`Variance CI High`, fill = Estimator), alpha = 0.2) +
+    facet_rep_grid(
+      rows = vars(`Measure`),
+      cols = vars(`Optimize`),
+      scale = "free_y",
+      repeat.tick.labels = TRUE
+    ) +
+    scale_y_continuous(trans = "log10") +
+    ylab("$\\text{Sample Size} \\times \\text{Var}\\left[\\mathcal{S}_{0}(\\hat{\\vartheta}_{n})\\right]$ (Lower is Better)") +
+    scale_colour_manual(name = NULL, values = score_colour[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    scale_linetype_manual(name = NULL, values = score_lines["95\\% Confidence Interval"], breaks = score_breaks) +
+    scale_shape_manual(name = NULL, values = score_shapes[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    scale_fill_manual(name = NULL, values = score_colour[c("One-Stage", "Two-Stage", "Two-Stage - Weights Fixed at Limit Optimizer")], breaks = score_breaks) +
+    guides(shape = guide_legend(order = 1), colour = guide_legend(order = 2), linetype = guide_legend(order = 3), fill = "none") +
+    theme_elsivier() +
+    theme(axis.title.y = element_text(margin = margin(r = 2, unit = "mm")))
+  svps_panels = ggplot_build(score_variance_plot_stage)$layout$panel_params
+  score_variance_plot_stage <<- score_variance_plot_stage +
+    geom_text_repel(
+      aes(x = x, y = y, label = labels_stage),
+      plot_labels_stage %>%
+        add_column(
+          x = sapply(svps_panels, function(p) { p$x.range[1] + letter_label_x_offset*(p$x.range[2] - p$x.range[1]) }),
+          y = sapply(svps_panels, function(p) { 10^(p$y.range[2] + letter_label_y_offset*(p$y.range[2] - p$y.range[1])) })
+        ),
+      size = theme_elsivier_axis_title_size/.pt,
+      inherit.aes = FALSE
+    )
+  
+  tikz(
+    file = file.path("figure", "FIG3p.tex"),
+    width = page_width_inches,
+    height = full_width_height_inches,
+    standAlone = TRUE
+  )
+  print(score_variance_plot_stage_presentation)
   dev.off()
   
   score_variance_plot_opt <<- ggplot(

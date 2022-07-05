@@ -9,6 +9,7 @@ set -e
 export OMP_NUM_THREADS=$(grep '^core id' /proc/cpuinfo | sort -u | wc -l)
 
 PAPER="sampling_variability_forecast_combinations"
+PRESENTATION="presentation_sampling_variability_forecast_combinations"
 
 Rscript --vanilla plot_simulation.R
 Rscript --vanilla plot_SP500.R
@@ -30,5 +31,12 @@ pdflatex -interaction=nonstopmode "${PAPER}.tex"
 pdflatex -interaction=nonstopmode "${PAPER}.tex"
 
 # Prepare submission for arXiv, see "https://arxiv.org/help/submit_tex".
-tar --create --gzip --file=arxiv_submission.tar.gz "${PAPER}.tex" *.bbl ECA_jasa.bst figure/FIG*.pdf figure/TBL*.tex
+tar --create --gzip --file=arxiv_submission.tar.gz "${PAPER}.tex" "${PAPER}.bbl" supp.bbl ECA_jasa.bst figure/FIG*.pdf figure/TBL*.tex
+
+# Repeat above compilation process for ${PRESENTATION}.
+pdflatex -interaction=nonstopmode "${PRESENTATION}.tex"
+bibtex "${PRESENTATION}"
+pdflatex -interaction=nonstopmode "${PRESENTATION}.tex"
+pdflatex -interaction=nonstopmode "${PRESENTATION}.tex"
+pdflatex -interaction=nonstopmode "${PRESENTATION}.tex"
 
