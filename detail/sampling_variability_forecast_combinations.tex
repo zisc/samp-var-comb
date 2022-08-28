@@ -3,7 +3,7 @@
 \documentclass[12pt]{article}
 
 % NOTE: To produce blinded version, replace "0" with "1" below.
-\newcommand{\blind}{1}
+\newcommand{\blind}{0}
 
 \addtolength{\oddsidemargin}{-.5in}%
 \addtolength{\evensidemargin}{-1in}%
@@ -58,22 +58,24 @@
 \def\spacingset#1{\renewcommand{\baselinestretch}%
 {#1}\small\normalsize} \spacingset{1}
 
-\newcommand{\papertitle}{\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts}
+\newcommand{\papertitle}{\bf The Impact of Sampling Variability on Estimated Combinations of Distributional Forecasts\protect\footnotemark[1]}
+\newcommand{\paperauthors}{Ryan Zischke\protect\footnotemark[2] \protect\footnotemark[3] \protect\footnotemark[4], Gael M. Martin\protect\footnotemark[2], David T. Frazier\protect\footnotemark[2], D. S. Poskitt\protect\footnotemark[2]}
 \newcommand{\funding}{This research has been supported by Australian Research Council (ARC) Discovery Grant DP200101414. Frazier was also supported by ARC Early Career Researcher Award DE200101070; and Martin and Frazier were provided support by the ARC Centre of Excellence in Mathematics and Statistics.}
-\newcommand{\ebsaffiliation}{Department of Econometrics and Business Statistics, Monash University}
-\newcommand{\mddisclaimer}{The views expressed in this paper are those of the authors alone, and do not in any way represent the Methodology Division, the Australian Bureau of Statistics, the Australian Public Service, or the Australian Government.}
-\newcommand{\mdaffiliation}{Methodology Division, Australian Bureau of Statistics\protect\footnotemark[2]}
+\newcommand{\ebsaffiliation}{Department of Econometrics and Business Statistics, Monash University.}
+\newcommand{\mdaffiliation}{Methodology Division, Australian Bureau of Statistics. The views expressed in this paper are those of the authors alone, and do not in any way represent the Methodology Division, the Australian Bureau of Statistics, the Australian Public Service, or the Australian Government.}
 \newcommand{\correspondingauthor}{Corresponding author \\ \indent\ \ \textit{E-mail address:} ryan.zischke@monash.edu.}
-\newcommand{\paperauthors}{Ryan Zischke\protect\footnotemark[1]\hspace{.2cm} \\ \ebsaffiliation \\ \mdaffiliation \\ and \\  Gael M. Martin \\ \ebsaffiliation \\ and \\ David T. Frazier \\ \ebsaffiliation \\ and \\ D. S. Poskitt \\ \ebsaffiliation}
 
 \if0\blind
 {
   \renewcommand{\thefootnote}{\fnsymbol{footnote}}
   \title{\papertitle}
+  \date{June 6, 2022}
   \author{\paperauthors}
   \maketitle
   \footnotetext[1]{\funding}
-  \footnotetext[2]{\mddisclaimer}
+  \footnotetext[2]{\ebsaffiliation}
+  \footnotetext[3]{\mdaffiliation}
+  \footnotetext[4]{\correspondingauthor}
   \setcounter{footnote}{0}
   \renewcommand{\thefootnote}{\arabic{footnote}}
 } \fi
@@ -494,13 +496,13 @@ The authors report there are no competing interests to declare.
   \spacingset{1}
   \setcounter{footnote}{0}
   \renewcommand{\thefootnote}{\fnsymbol{footnote}}
-  \title{\papertitle}
-  \author{\paperauthors}
   \maketitle
   \footnotetext[1]{\funding}
-  \footnotetext[2]{\mddisclaimer}
+  \footnotetext[2]{\ebsaffiliation}
+  \footnotetext[3]{\mdaffiliation}
+  \footnotetext[4]{\correspondingauthor}
   \renewcommand{\thefootnote}{\arabic{footnote}}
-  \spacingset{1.8}
+  \spacingset{1.5}
 } \fi
 
 \if1\blind
